@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Alumno</title>
+</head>
+<body>
+    <h1>Agregar Alumno</h1>
+
+    <h3>Datos del Estudiante</h3>
+    <input type="text" id="dni" placeholder="DNI">
+    <input type="text" id="nombre" placeholder="Nombre">
+    <input type="text" id="apellido" placeholder="Apellido">
+    <input type="date" id="fecha_nacimiento" placeholder="Fecha de Nacimiento">
+    <input type="text" id="domicilio" placeholder="Domicilio">
+    <input type="number" id="localidad_id" placeholder="Localidad ID">
+    <input type="number" id="escuela_primaria_id" placeholder="Escuela Primaria ID">
+
+    <h3>Datos del Tutor</h3>
+    <input type="text" id="tutor_dni" placeholder="DNI Tutor">
+    <input type="text" id="tutor_nombre" placeholder="Nombre Tutor">
+    <input type="text" id="tutor_apellido" placeholder="Apellido Tutor">
+    <input type="date" id="tutor_fecha_nacimiento" placeholder="Fecha Nacimiento Tutor">
+    <input type="text" id="tutor_telefono" placeholder="Teléfono">
+    <input type="email" id="tutor_email" placeholder="Email">
+
+    <h3>Inscripción</h3>
+    <input type="number" id="escuela_primera_opcion_id" placeholder="Escuela 1ra Opción ID">
+    <input type="number" id="escuela_segunda_opcion_id" placeholder="Escuela 2da Opción ID">
+    <input type="number" id="escuela_tercera_opcion_id" placeholder="Escuela 3ra Opción ID">
+    <input type="text" id="turno_preferencia" placeholder="turno: mañana / tarde">
+    <input type="text" id="vinculo_escuela" placeholder="vínculo: ninguno / hermano / hijo">
+
+    <br><br>
+    <button id="btn">Enviar</button>
+    <div id="datos"></div>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+    $("#btn").click(function () {
+        let dni = $("#dni").val().trim();
+        let nombre = $("#nombre").val().trim();
+        let apellido = $("#apellido").val().trim();
+        let fecha_nacimiento = $("#fecha_nacimiento").val().trim();
+        let domicilio = $("#domicilio").val().trim();
+        let localidad_id = $("#localidad_id").val().trim();
+        let escuela_primaria_id = $("#escuela_primaria_id").val().trim();
+
+        let tutor_dni = $("#tutor_dni").val().trim();
+        let tutor_nombre = $("#tutor_nombre").val().trim();
+        let tutor_apellido = $("#tutor_apellido").val().trim();
+        let tutor_fecha_nacimiento = $("#tutor_fecha_nacimiento").val().trim();
+        let tutor_telefono = $("#tutor_telefono").val().trim();
+        let tutor_email = $("#tutor_email").val().trim();
+
+        let escuela_primera_opcion_id = $("#escuela_primera_opcion_id").val().trim();
+        let escuela_segunda_opcion_id = $("#escuela_segunda_opcion_id").val().trim();
+        let escuela_tercera_opcion_id = $("#escuela_tercera_opcion_id").val().trim();
+        let turno_preferencia = $("#turno_preferencia").val().trim();
+        let vinculo_escuela = $("#vinculo_escuela").val().trim();
+
+        if (dni == "") { alert("DNI vacío"); return; }
+        if (nombre == "") { alert("Nombre vacío"); return; }
+        if (apellido == "") { alert("Apellido vacío"); return; }
+        if (fecha_nacimiento == "") { alert("Fecha de nacimiento vacía"); return; }
+        if (localidad_id == "") { alert("Localidad ID vacío"); return; }
+        if (escuela_primaria_id == "") { alert("Escuela primaria ID vacío"); return; }
+        if (tutor_dni == "") { alert("DNI del tutor vacío"); return; }
+        if (tutor_nombre == "") { alert("Nombre del tutor vacío"); return; }
+        if (tutor_apellido == "") { alert("Apellido del tutor vacío"); return; }
+        if (escuela_primera_opcion_id == "") { alert("Primera opción de escuela vacía"); return; }
+        if (turno_preferencia == "") { alert("Turno vacío"); return; }
+        if (vinculo_escuela == "") { alert("Vínculo vacío"); return; }
+
+        $.ajax({
+            url: "back/insert_alumno.php",
+            type: "POST",
+            data: {
+                dni, nombre, apellido, fecha_nacimiento, domicilio, localidad_id, escuela_primaria_id,
+                tutor_dni, tutor_nombre, tutor_apellido, tutor_fecha_nacimiento, tutor_telefono, tutor_email,
+                escuela_primera_opcion_id, escuela_segunda_opcion_id, escuela_tercera_opcion_id,
+                turno_preferencia, vinculo_escuela
+            },
+            success: function (resp) {
+                var R = JSON.parse(resp);
+                console.log(R);
+                $("#datos").text(R.mensaje);
+            }
+        });
+    });
+</script>
+</html>
