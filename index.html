@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inscripción Secundaria — Partido de La Costa 2026</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  .hero { padding: var(--sp-10) 0 var(--sp-8); text-align: center; }
+  .hero__cycle { margin-bottom: var(--sp-4); }
+  .hero__logo {
+    display: block;
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    margin: 0 auto var(--sp-6);
+  }
+  .schools-wrap { display: flex; flex-direction: column; gap: var(--sp-3); margin-top: var(--sp-4); }
+  .more-link {
+    text-align: center; padding: var(--sp-4);
+    font-size: .875rem; color: var(--text-muted);
+    border: 1px dashed var(--border); border-radius: var(--r-lg);
+    cursor: pointer; transition: all var(--t-fast);
+  }
+  .more-link:hover { border-color: var(--accent); color: var(--accent); }
+  .filters-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-4); margin-bottom: var(--sp-5); }
+  .page-wrap { padding: var(--sp-8) 0 var(--sp-16); }
+  @media (max-width:600px) {
+    .filters-row { flex-direction: column; align-items: flex-start; }
+    .search-box { max-width: 100%; width: 100%; }
+    .hero__logo { width: 110px; height: 110px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav__inner">
+    <div class="nav__brand">
+      <div class="nav__logo">IS</div>
+      <div>
+        <div class="nav__title">Inscripción Secundaria</div>
+        <div class="nav__sub">Partido de La Costa · 2026</div>
+      </div>
+    </div>
+    <div class="nav__actions">
+      <div class="theme-switcher" id="themeSwitcher"></div>
+      <a href="login.html" class="btn btn--outline btn--sm">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Acceso institucional
+      </a>
+      <button class="btn btn--ghost btn--sm btn--icon" title="Ayuda" aria-label="Ayuda">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="page-wrap">
+  <div class="container">
+
+    <!-- HERO -->
+    <section class="hero animate-in">
+      <img id="siteLogoHero" src="logo-light.png" alt="Inscripción Secundaria" class="hero__logo">
+      <div class="tag tag--accent hero__cycle">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Ciclo lectivo 2026
+      </div>
+      <h1 style="margin-bottom:var(--sp-3)">Inscripción a escuelas<br>secundarias</h1>
+      <p style="font-size:1rem;max-width:520px;margin:0 auto">Seleccioná la escuela donde querés inscribir al/la estudiante para iniciar el proceso de inscripción.</p>
+    </section>
+
+    <!-- WARNING BANNER -->
+    <div class="alert alert--warning animate-in" style="animation-delay:.1s;max-width:600px;margin-bottom:var(--sp-8)">
+      <span class="alert__icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </span>
+      <span>La inscripción <strong>no garantiza vacante</strong>. Si se supera el cupo disponible, se realizará un sorteo transparente entre todos los inscriptos.</span>
+    </div>
+
+    <!-- SEARCH & FILTERS -->
+    <div class="filters-row animate-in" style="animation-delay:.15s">
+      <div class="search-box" style="flex:1;max-width:380px">
+        <span class="search-box__icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </span>
+        <input type="search" class="input" id="searchInput" placeholder="Buscar por escuela o localidad…" autocomplete="off">
+      </div>
+      <div class="filter-chips" id="filterChips">
+        <button class="chip chip--active" data-filter="todas">Todas</button>
+        <button class="chip" data-filter="Mar de Ajó">Mar de Ajó</button>
+        <button class="chip" data-filter="Santa Teresita">Santa Teresita</button>
+        <button class="chip" data-filter="San Clemente">San Clemente</button>
+        <button class="chip" data-filter="San Bernardo">San Bernardo</button>
+        <button class="chip" data-filter="Técnicas">Técnicas</button>
+      </div>
+    </div>
+
+    <!-- SCHOOL LIST -->
+    <div class="schools-wrap stagger" id="schoolList"></div>
+
+    <div class="more-link" id="moreLink" style="display:none" onclick="showAll()">
+      <span id="moreLinkText">+ ver más escuelas…</span>
+    </div>
+
+  </div>
+</main>
+
+<script src="app.js"></script>
+<script>
+const SCHOOLS = [
+  { id:'1', name:'EEST N° 1 — Escuela de Ed. Secundaria Técnica', loc:'Santa Teresita', addr:'Calle 124 y 104', tel:'(02246) 420-520', tipo:'tecnica' },
+  { id:'2', name:'EEST N° 2 — Escuela de Ed. Secundaria Técnica', loc:'Santa Teresita', addr:'Calle 65 y 44', tel:'(02246) 432-100', tipo:'tecnica' },
+  { id:'3', name:'EES N° 1 — Escuela de Ed. Secundaria',          loc:'Mar de Ajó',     addr:'Blanco Encalada 100', tel:'(02257) 420-601', tipo:'normal' },
+  { id:'4', name:'EES N° 2 — Escuela de Ed. Secundaria',          loc:'Santa Teresita', addr:'Calle 7 N° 1150',     tel:'(02246) 423-585', tipo:'normal' },
+  { id:'5', name:'EES N° 3 — Escuela de Ed. Secundaria',          loc:'San Clemente del Tuyú', addr:'Calle 12 N° 796', tel:'(02252) 521-340', tipo:'normal' },
+  { id:'6', name:'EES N° 4 — Escuela de Ed. Secundaria',          loc:'San Bernardo',   addr:'Av. Argentina 800', tel:'(02257) 461-200', tipo:'normal' },
+  { id:'7', name:'EES N° 7 — Escuela de Ed. Secundaria',          loc:'Las Toninas',    addr:'Calle 22 y 41',     tel:'(02252) 432-010', tipo:'normal' },
+  { id:'8',  name:'EES N° 8 — Escuela de Ed. Secundaria',         loc:'Mar del Tuyú',   addr:'Calle 55 N° 200',   tel:'(02246) 498-320', tipo:'normal' },
+  { id:'9',  name:'EES N° 9 — Escuela de Ed. Secundaria',         loc:'La Lucila del Mar', addr:'Calle 5 y 18',   tel:'(02246) 480-150', tipo:'normal' },
+  { id:'10', name:'EES N° 10 — Escuela de Ed. Secundaria',        loc:'Santa Teresita', addr:'Calle 3 N° 650',    tel:'(02246) 430-980', tipo:'normal' },
+  { id:'11', name:'EES N° 11 — Escuela de Ed. Secundaria',        loc:'San Clemente del Tuyú', addr:'Av. 1 N° 2000', tel:'(02252) 522-400', tipo:'normal' },
+  { id:'12', name:'EES N° 12 — Escuela de Ed. Secundaria',        loc:'Mar de Ajó',     addr:'Av. Costanera 300', tel:'(02257) 462-850', tipo:'normal' },
+  { id:'13', name:'EES N° 13 — Escuela de Ed. Secundaria',        loc:'San Bernardo',   addr:'Calle Rivadavia 500', tel:'(02257) 464-100', tipo:'normal' },
+  { id:'14', name:'EES N° 14 — Escuela de Ed. Secundaria',        loc:'Mar de Ajó Norte', addr:'Av. Playa 120',  tel:'(02257) 470-200', tipo:'normal' },
+];
+
+const INITIAL_SHOW = 6;
+let showingAll = false;
+let currentFilter = 'todas';
+let currentSearch = '';
+
+const LOGOS = { light: 'logo-light.png', dark: 'logo-dark.png', sepia: 'logo-sepia.png' };
+function updateLogos() {
+  const theme = document.documentElement.getAttribute('data-theme') || 'light';
+  const el = document.getElementById('siteLogoHero');
+  if (el) el.src = LOGOS[theme] || LOGOS.light;
+}
+updateLogos();
+new MutationObserver(updateLogos).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+function getFiltered() {
+  return SCHOOLS.filter(s => {
+    const matchFilter = currentFilter === 'todas' ||
+      (currentFilter === 'Técnicas' ? s.tipo === 'tecnica' : s.loc.toLowerCase().includes(currentFilter.toLowerCase()));
+    const q = currentSearch.toLowerCase();
+    const matchSearch = !q || s.name.toLowerCase().includes(q) || s.loc.toLowerCase().includes(q);
+    return matchFilter && matchSearch;
+  });
+}
+
+function renderSchools() {
+  const list = document.getElementById('schoolList');
+  const more = document.getElementById('moreLink');
+  const filtered = getFiltered();
+  const toShow = showingAll ? filtered : filtered.slice(0, INITIAL_SHOW);
+
+  list.innerHTML = toShow.map((s, i) => {
+    const isTech = s.tipo === 'tecnica';
+    const badge = isTech
+      ? `<span class="badge badge--tech">T${s.id.replace('t','')}</span>`
+      : `<span class="badge badge--num">${s.id}</span>`;
+    return `
+    <a href="dni.html?id=${s.id}" class="school-row animate-in ${isTech ? 'school-row--tech' : ''}" style="animation-delay:${i * 0.05}s">
+      ${badge}
+      <div class="school-row__info">
+        <div class="school-row__name">${s.name}</div>
+        <div class="school-row__meta">
+          <span>${s.loc}</span>
+          <span><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> ${s.addr}</span>
+          <span><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.16 6.16l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> ${s.tel}</span>
+        </div>
+      </div>
+      <span class="school-row__arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+    </a>`;
+  }).join('');
+
+  const remaining = filtered.length - INITIAL_SHOW;
+  if (!showingAll && remaining > 0) {
+    more.style.display = '';
+    document.getElementById('moreLinkText').textContent = `+ ${remaining} escuela${remaining > 1 ? 's' : ''} más…`;
+  } else {
+    more.style.display = 'none';
+  }
+
+  if (filtered.length === 0) {
+    list.innerHTML = `<div style="padding:var(--sp-10);text-align:center;color:var(--text-muted);font-size:.9rem">No se encontraron escuelas con esos criterios.</div>`;
+  }
+}
+
+function showAll() { showingAll = true; renderSchools(); }
+
+document.getElementById('searchInput').addEventListener('input', e => {
+  currentSearch = e.target.value;
+  showingAll = false;
+  renderSchools();
+});
+
+document.getElementById('filterChips').addEventListener('click', e => {
+  const chip = e.target.closest('.chip');
+  if (!chip) return;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('chip--active'));
+  chip.classList.add('chip--active');
+  currentFilter = chip.dataset.filter;
+  showingAll = false;
+  renderSchools();
+});
+
+renderSchools();
+</script>
+</body>
+</html>
